@@ -1,5 +1,4 @@
 import Search from './components/Search';
-import Suggest from './components/Suggest';
 import styled, { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`

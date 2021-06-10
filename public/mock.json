@@ -1,0 +1,45 @@
+{
+  "pages" : [
+    {
+      "title": "",
+      "url": "www.blabla.com/marketing",
+      "body" : "",
+      "keywords" : [
+        {
+          "category":"PEOPLE",
+          "value" : "Donald Trump"
+        },
+        {
+          "category":"BRANDS",
+          "value" : "Nike"
+        },
+        {
+          "category":"KEYWORDS",
+          "value" : "politics"
+        }
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "title": "",
+      "url": "S3://id/video.mpg",
+      "thumbnailUrl" : "",
+      "plot" : "",
+      "keywords" : [
+        {
+          "category":"PEOPLE",
+          "value" : "Donald Trump"
+        },
+        {
+          "category":"BRANDS",
+          "value" : "Nike"
+        },
+        {
+          "category":"KEYWORDS",
+          "value" : "politics"
+        }
+      ]
+    }
+  ]
+}
