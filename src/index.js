@@ -5,11 +5,11 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 
 const queryClient = new QueryClient();
 
-function render(node) {
+function render(node, searchApi) {
     ReactDOM.render(
         <React.StrictMode>
             <QueryClientProvider client={queryClient}>
-                <App />
+                <App searchApi={searchApi}/>
             </QueryClientProvider>
         </React.StrictMode>,
         node
@@ -18,11 +18,11 @@ function render(node) {
 
 function run() {
     if (process.env.NODE_ENV === 'production') {
-        window.AnyclipSearchWidget = $container => {
+        window.AnyclipSearchWidget = ({ node: $container, searchApi }) => {
             const node = document.createElement("div");
             node.style.width = '100%';
             $container.insertBefore(node, $container.firstChild);
-            render(node);
+            render(node, searchApi);
         }
     } else {
         render(document.getElementById('root'));

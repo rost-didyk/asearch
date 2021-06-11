@@ -21,12 +21,12 @@ const AppStyled = styled.div`
   max-width: 830px !important;
 `
 
-function App() {
+function App({searchApi}) {
   return (
    <>
        <GlobalStyle />
        <AppStyled className="anyclip-search-widget">
-           <Search />
+           <Search searchApi={searchApi}/>
        </AppStyled>
    </>
   );

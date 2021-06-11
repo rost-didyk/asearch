@@ -1,20 +1,22 @@
 import { useQuery } from "react-query";
 import axios from "axios";
 
-const searchUrl = 'http://localhost:3000/mock.json';
-
 const request = async (
-    searchQuery
+    searchQuery,
+    searchApi = 'http://localhost:3000/mock.json'
 ) => {
-    const { data } = await axios.get(
-        `${searchUrl}?query=${searchQuery}`
+    const { data } = await axios.post(
+        searchApi, {
+            query: searchQuery,
+            domain: 'www.anyclip.com'
+        }
     );
 
     return data;
 };
 
-export default function useSearch(searchQuery) {
-    return useQuery(["query", searchQuery], () => request(searchQuery), {
+export default function useSearch(searchQuery, searchApi) {
+    return useQuery(["query", searchQuery], () => request(searchQuery, searchApi), {
         enabled: Boolean(searchQuery),
     });
 }

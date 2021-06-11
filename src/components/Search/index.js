@@ -5,38 +5,67 @@ import logo from '../../logo.png';
 import useDebounce from '../../useDebounce';
 import useSearch from '../../useSearch';
 
-function SuggestText() {
-    return (
-        <a href="#" className="anyclip-search-suggest__text">
-            <h2>Lock (computer science) - Wikipedia</h2>
-            <a>https://en.wikipedia.org/wiki/Lock_(computer_science)</a>
-            <p>In computer science, a lock or mutex (from mutual exclusion) is a synchronization mechanism for enforcing limits on access to a resource in an</p>
-        </a>
-    )
-}
+import Spinner from '../Spinner';
 
-function SuggestVideo() {
+
+function Tags({ tags }) {
+    const tagsColors = {
+        'PEOPLE': 'color-1',
+        'BRANDS': 'color-2',
+        'KEYWORDS': 'color-3'
+    };
+
     return (
-        <div className="anyclip-search-suggest__video">
-            <div className="anyclip-search-suggest__video-img">
-                <img src="https://cdn3.anyclip.com/AXSVqyZRfrdJai27G9Yd/1600238860216_426x240_thumbnail.jpg?wid=LWPlayerForDevelopers" alt=""/>
-                <div className="anyclip-search-suggest__video-tags">
-                    <a href="#" className="color-1">People</a>
-                    <a href="#" className="color-2">Future</a>
-                    <a href="#" className="color-3">Style</a>
-                    <a href="#" className="color-2">Intelect</a>
-                    <a href="#" className="color-1">Money</a>
-                </div>
-            </div>
-            <h3>1 Futurama - The End of the Universe</h3>
+        <div className="anyclip-search-suggest__video-tags">
+            { tags.map(tag => (
+                <a className={tagsColors[tag.category] || 'color-1'}>{tag.value}</a>
+            )) }
         </div>
     )
 }
 
-export default function Search() {
+function SuggestText({
+    url,
+    title,
+    description,
+    tags
+}) {
+    return (
+        <a href={url} target="_blank" className="anyclip-search-suggest__text">
+            <h2>{title}</h2>
+            <a className="title">{url}</a>
+            <p>{description}</p>
+            <Tags tags={tags} />
+        </a>
+    )
+}
+
+function SuggestVideo({
+    url,
+    title,
+    thumbnail,
+    tags
+}) {
+    return (
+        <a href={url} target="_blank" className="anyclip-search-suggest__video">
+            <div className="anyclip-search-suggest__video-img">
+                <img src={thumbnail} alt={title}/>
+                <Tags tags={tags} />
+            </div>
+            <h3>{title}</h3>
+        </a>
+    )
+}
+
+export default function Search({searchApi}) {
     const [searchQuery, setSearchQuery] = useState('');
     const debouncedSearchQuery = useDebounce(searchQuery, 600);
-    const { isFetching, data } = useSearch(debouncedSearchQuery);
+    const { isFetching, data } = useSearch(debouncedSearchQuery, searchApi);
+
+    console.log({
+        isFetching,
+        data
+    })
 
     const handleOnChange = (e) => {
         setSearchQuery(e.target.value);
@@ -46,51 +75,43 @@ export default function Search() {
             <div className="anyclip-search-wrapper">
                 <img src={logo} alt=""/>
                 <input type="text" placeholder="Search any content" onChange={handleOnChange}/>
+                <div className="anyclip-search-wrapper__spinner">
+                    { isFetching && <Spinner /> }
+                </div>
             </div>
-            { searchQuery && (
+            { searchQuery && data && (
                 <div className="anyclip-search-suggest">
-                    <p className="searchresultsnumber">About 155,000 results (0.56 seconds) </p>
+                    <p className="searchresultsnumber">Found about {data.pages?.length ?? 0 + data.videos?.length ?? 0} results </p>
                     <div className="anyclip-search-suggest__results">
                         <div className="anyclip-search-suggest__left">
-                            <SuggestText />
-                            <SuggestText />
-                            <SuggestText />
-                            <SuggestText />
-                            <SuggestText />
-                            <SuggestText />
+                            {
+                                data.pages.map(page => (
+                                    <SuggestText
+                                        url={page.url}
+                                        title={page.title}
+                                        description={page.body.slice(0, 500)}
+                                        tags={page.keywords}
+                                    />
+                                ))
+                            }
                         </div>
                         <div className="anyclip-search-suggest__right">
                             <div className="anyclip-search-suggest__videos">
                                 <div className="anyclip-search-suggest__videos-category">
-                                    <h3>Show new video</h3>
+                                    <h3>Related video to content</h3>
                                 </div>
                                 <div className="anyclip-search-suggest__videos-list">
-                                    <SuggestVideo />
-                                    <SuggestVideo />
+                                    { data.videos.map(video => (
+                                        <SuggestVideo
+                                            url={video.url}
+                                            title={video.title.slice(0, 60) + '...'}
+                                            thumbnail={video.thumbnailUrl}
+                                            tags={video.keywords}
+                                        />
+                                    )) }
                                 </div>
                             </div>
 
-                            <div className="anyclip-search-suggest__videos">
-                                <div className="anyclip-search-suggest__videos-category">
-                                    <h3>Related category video</h3>
-                                </div>
-                                <div className="anyclip-search-suggest__videos-list">
-                                    <SuggestVideo />
-                                    <SuggestVideo />
-                                    <SuggestVideo />
-                                    <SuggestVideo />
-                                </div>
-                            </div>
-
-                            <div className="anyclip-search-suggest__videos">
-                                <div className="anyclip-search-suggest__videos-category">
-                                    <h3>Related video</h3>
-                                </div>
-                                <div className="anyclip-search-suggest__videos-list">
-                                    <SuggestVideo />
-                                    <SuggestVideo />
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
