@@ -15,6 +15,10 @@ function Tags({ tags }) {
         'KEYWORDS': 'color-3'
     };
 
+    if (!tags || !Array.isArray(tags)) {
+        return <></>
+    }
+
     return (
         <div className="anyclip-search-suggest__video-tags">
             { tags.map(tag => (

@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.js": "/static/js/main.4ae86d30.js",
-    "main.js.map": "/static/js/main.4ae86d30.js.map",
+    "main.js": "/static/js/main.f25c6627.js",
+    "main.js.map": "/static/js/main.f25c6627.js.map",
     "index.html": "/index.html",
-    "static/js/main.4ae86d30.js.LICENSE.txt": "/static/js/main.4ae86d30.js.LICENSE.txt"
+    "static/js/main.f25c6627.js.LICENSE.txt": "/static/js/main.f25c6627.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/main.4ae86d30.js"
+    "static/js/main.f25c6627.js"
   ]
 }
