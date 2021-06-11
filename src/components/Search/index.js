@@ -62,6 +62,10 @@ export default function Search({searchApi}) {
     const debouncedSearchQuery = useDebounce(searchQuery, 600);
     const { isFetching, data } = useSearch(debouncedSearchQuery, searchApi);
 
+    const getTotal = (pages, videos) => {
+        return pages.length + videos.length
+    }
+
     console.log({
         isFetching,
         data
@@ -81,7 +85,7 @@ export default function Search({searchApi}) {
             </div>
             { searchQuery && data && (
                 <div className="anyclip-search-suggest">
-                    <p className="searchresultsnumber">Found about {data.pages?.length ?? 0 + data.videos?.length ?? 0} results </p>
+                    <p className="searchresultsnumber">Found about {getTotal(data.pages, data.videos)} results </p>
                     <div className="anyclip-search-suggest__results">
                         <div className="anyclip-search-suggest__left">
                             {
