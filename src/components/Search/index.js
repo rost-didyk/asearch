@@ -57,10 +57,10 @@ function SuggestVideo({
     )
 }
 
-export default function Search({searchApi}) {
+export default function Search({searchApi, domain}) {
     const [searchQuery, setSearchQuery] = useState('');
     const debouncedSearchQuery = useDebounce(searchQuery, 600);
-    const { isFetching, data } = useSearch(debouncedSearchQuery, searchApi);
+    const { isFetching, data } = useSearch(debouncedSearchQuery, searchApi, domain);
 
     const getTotal = (pages, videos) => {
         return pages.length + videos.length

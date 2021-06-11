@@ -21,6 +21,7 @@
     // 4) initialize AnyclipSearch widget
     window.AnyclipSearchWidget({
         node: document.querySelector('.row_col_wrap_12'),
-        searchApi: 'http://localhost:3000/mock.json'
+        searchApi: 'http://localhost:3000/mock.json',
+        domain: 'anyclip.com'
     })
 
