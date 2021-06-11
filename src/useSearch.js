@@ -8,7 +8,7 @@ const request = async (
     const { data } = await axios.post(
         searchApi, {
             query: searchQuery,
-            domain: 'www.anyclip.com'
+            domain: 'anyclip.com'
         }
     );
 
